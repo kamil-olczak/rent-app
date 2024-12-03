@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="rootVBox" prefHeight="634.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rentapp.gui.window.AddEquipBaseCtrl">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="634.0" prefWidth="777.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label layoutX="17.0" layoutY="39.0" prefHeight="25.0" prefWidth="93.0" text="Nazwa*:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="title" layoutX="17.0" layoutY="14.0" prefHeight="25.0" prefWidth="147.0" text="Dodaj sprzęt do bazy:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="17.0" layoutY="80.0" prefHeight="25.0" prefWidth="93.0" text="Model*:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="name" layoutX="130.0" layoutY="39.0" prefHeight="25.0" prefWidth="452.0" />
+            <TextField fx:id="model" accessibleRole="TEXT_FIELD" layoutX="130.0" layoutY="79.0" prefHeight="25.0" prefWidth="312.0" />
+            <TextField fx:id="sn" accessibleRole="TEXT_FIELD" layoutX="130.0" layoutY="119.0" prefHeight="25.0" prefWidth="312.0" />
+            <TextField fx:id="year" layoutX="130.0" layoutY="153.0" prefHeight="25.0" prefWidth="312.0" />
+            <TextField fx:id="equipID" layoutX="129.0" layoutY="190.0" prefHeight="25.0" prefWidth="70.0" />
+            <TextField fx:id="perDayGross" layoutX="130.0" layoutY="234.0" prefHeight="25.0" prefWidth="93.0" />
+            <TextField fx:id="deposit" layoutX="130.0" layoutY="268.0" prefHeight="25.0" prefWidth="93.0" />
+            <TextField fx:id="value" layoutX="131.0" layoutY="304.0" prefHeight="25.0" prefWidth="93.0" />
+            <Button fx:id="endButton" layoutX="129.0" layoutY="551.0" mnemonicParsing="false" onAction="#endAction" prefHeight="46.0" prefWidth="127.0" text="Dodaj sprzęt" />
+            <Button layoutX="582.0" layoutY="547.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="27.0" prefWidth="127.0" text="Anuluj" />
+            <Label layoutX="17.0" layoutY="119.0" prefHeight="25.0" prefWidth="93.0" text="S/N:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="217.0" prefHeight="63.0" prefWidth="107.0" textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="153.0" prefHeight="25.0" prefWidth="93.0" text="Rok produkcji:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="17.0" layoutY="190.0" prefHeight="25.0" prefWidth="93.0" text="Numer wewn*.:">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="637.0" layoutY="530.0" text="Esc" textFill="#9e9c9c" />
+            <Label layoutX="17.0" layoutY="224.0" prefHeight="46.0" prefWidth="93.0" text="Stawka dobowa brutto*:" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="230.0" layoutY="235.0" prefHeight="25.0" prefWidth="93.0" text="zł">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="17.0" layoutY="258.0" prefHeight="46.0" prefWidth="93.0" text="Kaucja*:" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="230.0" layoutY="269.0" prefHeight="25.0" prefWidth="93.0" text="zł">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="294.0" prefHeight="46.0" prefWidth="93.0" text="Wartość*:" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="230.0" layoutY="305.0" prefHeight="25.0" prefWidth="93.0" text="zł">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TableView fx:id="accTable" layoutX="129.0" layoutY="348.0" prefHeight="136.0" prefWidth="581.0">
+              <columns>
+                <TableColumn fx:id="accName" prefWidth="116.0" text="Nazwa" />
+                <TableColumn fx:id="accPriceGross" prefWidth="212.0" text="Cena brutto za dobę/wypożyczenie/zużycie" />
+                  <TableColumn fx:id="accPriceNett" prefWidth="89.0" text="Cena netto za dobę/wypożyczenie/zużycie" />
+                  <TableColumn fx:id="accQty" prefWidth="89.0" text="Ilość" />
+              </columns>
+            </TableView>
+            <TextField fx:id="checkDate" layoutX="484.0" layoutY="191.0" prefHeight="25.0" prefWidth="93.0" />
+            <Label layoutX="316.0" layoutY="180.0" prefHeight="46.0" prefWidth="162.0" text="Data ostatniego przeglądu:" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="489.0" layoutY="212.0" prefHeight="46.0" prefWidth="93.0" text="format dd.mm.rrrr" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="checkMotohours" layoutX="484.0" layoutY="256.0" prefHeight="25.0" prefWidth="93.0" />
+            <Label layoutX="316.0" layoutY="229.0" prefHeight="71.0" prefWidth="155.0" text="Ilość mtg. przy ostatnim przeglądzie:" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Button layoutX="129.0" layoutY="493.0" mnemonicParsing="false" onAction="#addAccessory" prefHeight="27.0" prefWidth="127.0" text="Dodaj akcesorium" />
+            <Button layoutX="484.0" layoutY="493.0" mnemonicParsing="false" onAction="#deleteAccessory" prefHeight="27.0" prefWidth="127.0" text="Usuń akcesorium" />
+            <Button layoutX="267.0" layoutY="493.0" mnemonicParsing="false" onAction="#editAccQty" prefHeight="27.0" prefWidth="127.0" text="Edytuj ilość" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
