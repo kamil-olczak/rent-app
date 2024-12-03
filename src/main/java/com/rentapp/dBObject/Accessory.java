@@ -11,6 +11,7 @@ public class Accessory{
     private boolean isUsable;
     private String usage;
     private String info = "";
+    private int quantity;
 
     public Accessory(int accessoryID) {
         this.accessoryID = accessoryID;
@@ -104,5 +105,13 @@ public class Accessory{
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

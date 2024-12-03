@@ -14,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -72,13 +71,11 @@ public class RentHistoryCtrl implements Initializable {
             }
         });
 
-        try {
-            initializeEquipTable();
-            rentalTable.getItems().addAll(Table.updateHistoryRentalTable(DBQuery.queryHistoryRentalTable()));
-            initializedRentalTable.getItems().addAll(rentalTable.getItems());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        initializeEquipTable();
+        rentalTable.getItems().addAll(DBQuery.queryAndMakeHistoryRentalTable());
+        initializedRentalTable.getItems().addAll(rentalTable.getItems());
+
         searchColumnChose.getSelectionModel().select(0);
         search.requestFocus();
     }

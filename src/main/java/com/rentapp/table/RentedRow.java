@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 public class RentedRow {
     private String client;
@@ -96,14 +97,14 @@ public class RentedRow {
         return accessories;
     }
 
-    public void setAccessories(ResultSet accessoriesNamesAndUsage) throws SQLException {
-//        "SELECT a.nazwa, IFNULL(wa.stopien_zuzycia,\"\") "
-        while(accessoriesNamesAndUsage.next()){
-            this.accessories += accessoriesNamesAndUsage.getString(1)+ ", ";
-            if (!accessoriesNamesAndUsage.getString(2).isEmpty()){
-                this.accessories += accessoriesNamesAndUsage.getString(2) + ", ";
+    public void setAccessories(HashMap<String, String> accessoriesNamesAndUsage) throws SQLException {
+
+        accessoriesNamesAndUsage.forEach((accessory, usage) ->{
+            this.accessories += accessory + ", ";
+            if (!usage.isEmpty()) {
+                this.accessories += usage + ", ";
             }
-        }
+        });
     }
 
     public String getFromWhen() {

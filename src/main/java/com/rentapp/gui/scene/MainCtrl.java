@@ -163,7 +163,7 @@ public class MainCtrl implements Initializable{
         //Rental Tab
         initializeRentalTable();
         try {
-            rentalTable.setItems(Table.updateRentalTable(DBQuery.queryRentalTable()));
+            rentalTable.setItems(DBQuery.queryAndMakeRentalTable());
             rentalTable.setPlaceholder(new Label("Brak wypożyczeń"));
             rentalTableInitialized = true;
         } catch (SQLException e) {
@@ -173,7 +173,7 @@ public class MainCtrl implements Initializable{
         //Equip Tab
         try {
             initializeEquipTable();
-            equipTable.getItems().addAll(Table.updateEquipTable(DBQuery.queryEquipTable()));
+            equipTable.getItems().addAll(DBQuery.queryAndMakeEquipTable());
             equipTableCopy.getItems().addAll(equipTable.getItems());
             equipTableInitialized = true;
             TableColumn<EquipRow, String> defaultSortColumn = model;
@@ -188,7 +188,7 @@ public class MainCtrl implements Initializable{
         //Client Tab
         try {
             initializeClientTable();
-            clientTable.getItems().addAll(Table.updateClientTable(DBQuery.queryClientTable()));
+            clientTable.getItems().addAll(DBQuery.queryAndMakeClientTable());
             clientTableCopy.getItems().addAll(clientTable.getItems());
             clientTableInitialized = true;
         } catch (SQLException e) {
@@ -216,18 +216,6 @@ public class MainCtrl implements Initializable{
 
     private void initializeRentalTable(){
         rentalTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-//        checkboxColumn.setCellFactory(param -> {
-//            CheckBoxTableCell<RentalTableRow, Boolean> cell = new CheckBoxTableCell<>();
-//            cell.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-//                RentalTableRow row = cell.getTableRow().getItem();
-//                if (row != null) {
-//                    row.setSelected(isSelected);
-//                }
-//            });
-//            return cell;
-//        });
-//        checkboxColumn.setCellValueFactory(param -> param.getValue().selectedProperty());
-//        rentalTable.getColumns().addFirst(checkboxColumn);
 
         client.setCellValueFactory(new PropertyValueFactory<>("client"));
         company.setCellValueFactory(new PropertyValueFactory<>("company"));
@@ -268,7 +256,7 @@ public class MainCtrl implements Initializable{
                 for (RentedRow rentRow : selectedRows) {
                         DBQuery.setReturned(rentRow.getEquipmentID());
                 }
-                rentalTable.setItems(Table.updateRentalTable(DBQuery.queryRentalTable()));
+                rentalTable.setItems(DBQuery.queryAndMakeRentalTable());
             }
         } else {
             SceneCtrl.showMessageWindow("Błąd", "Nie wybrano żadnego wypożyczenia.");
@@ -279,16 +267,16 @@ public class MainCtrl implements Initializable{
     protected void refresh() throws SQLException {
         if(rentalTableInitialized){
             rentalTable.getItems().clear();
-            rentalTable.getItems().addAll(Table.updateRentalTable(DBQuery.queryRentalTable()));
+            rentalTable.getItems().addAll(DBQuery.queryAndMakeRentalTable());
         }
         if (equipTableInitialized) {
             equipTable.getItems().clear();
             if(showAvailable.isSelected()){
-                equipTable.getItems().addAll(Table.updateEquipTable(DBQuery.queryAvailableEquipTable()));
+                equipTable.getItems().addAll(DBQuery.queryAndMakeAvailableEquipTable());
                 equipTableCopy.getItems().clear();
                 equipTableCopy.getItems().addAll(equipTable.getItems());
             } else {
-                equipTable.getItems().addAll(Table.updateEquipTable(DBQuery.queryEquipTable()));
+                equipTable.getItems().addAll(DBQuery.queryAndMakeEquipTable());
                 equipTableCopy.getItems().clear();
                 equipTableCopy.getItems().addAll(equipTable.getItems());
             }
@@ -296,7 +284,7 @@ public class MainCtrl implements Initializable{
         }
         if (clientTableInitialized) {
             clientTable.getItems().clear();
-            clientTable.getItems().addAll(Table.updateClientTable(DBQuery.queryClientTable()));
+            clientTable.getItems().addAll(DBQuery.queryAndMakeClientTable());
             clientTableCopy.getItems().clear();
             clientTableCopy.getItems().addAll(clientTable.getItems());
         }

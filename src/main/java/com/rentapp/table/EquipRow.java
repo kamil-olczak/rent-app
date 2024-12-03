@@ -164,24 +164,12 @@ public class EquipRow {
         if(equipmentID.isEmpty()){
             return;
         } else {
-            ResultSet resultSet = DBQuery.queryAccessories(equipmentID);
-            int id;
-            String name;
-            String priceNett;
-            boolean usable;
-            String info;
-            int quantity;
-
-            while(resultSet.next()){
-//                "SELECT a.id_akcesoria, a.nazwa, a.cena_netto, a.zuzywalne, sa.ilosc_akcesoria"
-                id = resultSet.getInt(1);
-                name = resultSet.getString(2);
-                priceNett = resultSet.getString(3);
-                usable = resultSet.getBoolean(4);
-                quantity = resultSet.getInt(5);
-                info = resultSet.getString(6);
-                this.iDAccessory.put(id, new Accessory(id, name, priceNett, usable, info));
-                this.accessoryIDQty.put(id, quantity);
+            this.iDAccessory = DBQuery.queryAccessories(equipmentID);
+            if (this.iDAccessory != null) {
+                this.accessoryIDQty = new HashMap<>();
+                this.iDAccessory.forEach((k, v) -> {
+                    this.accessoryIDQty.put(k, this.iDAccessory.get(k).getQuantity());
+                });
             }
         }
     }

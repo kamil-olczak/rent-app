@@ -4,11 +4,10 @@ import com.rentapp.dBObject.Accessory;
 import com.rentapp.dBObject.Rent;
 import com.rentapp.gui.scene.LoginCtrl;
 import com.rentapp.gui.scene.SceneCtrl;
-import com.rentapp.table.ClientRow;
-import com.rentapp.table.EquipRow;
-import com.rentapp.table.UserRow;
+import com.rentapp.table.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Tab;
 
 import java.sql.*;
 import java.time.Year;
@@ -17,148 +16,124 @@ import java.util.Map;
 import java.util.Set;
 
 public class DBQuery {
-    public static ResultSet queryRentalTable() throws SQLException {
-        String querry = "SELECT k.imie_nazwisko, IFNULL(k.nazwa_firma, \"\") , s.model, s.id_sprzet, IFNULL(w.uwagi, \"\"), w.od, w.przew_data_zw, w.przez_kogo, w.id_klient, w.id_wypozyczenie, w.dlugoterminowe, w.za_d_netto, IFNULL(w.kaucja_brutto, \"0\"), k.pesel_nip, w.platnosc_kaucji, w.nr_wypozycz_klient, w.nr_wypozycz_klient_rok " +
+    public static ObservableList<RentedRow> queryAndMakeRentalTable() throws SQLException {
+        String query = "SELECT k.imie_nazwisko, IFNULL(k.nazwa_firma, \"\") , s.model, s.id_sprzet, IFNULL(w.uwagi, \"\"), w.od, w.przew_data_zw, w.przez_kogo, w.id_klient, w.id_wypozyczenie, w.dlugoterminowe, w.za_d_netto, IFNULL(w.kaucja_brutto, \"0\"), k.pesel_nip, w.platnosc_kaucji, w.nr_wypozycz_klient, w.nr_wypozycz_klient_rok " +
                 "FROM Wypozyczenie w " +
                 "JOIN Klient k ON w.id_klient = k.id_klient " +
                 "JOIN Wypozyczenie_sprzet ws ON w.id_wypozyczenie = ws.id_wypozyczenie " +
                 "JOIN Sprzet s ON ws.id_sprzet = s.id_sprzet " +
                 "WHERE ws.do IS NULL";
 
-        try{
-            //TODO closing statement
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeRentalTable(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ResultSet queryHistoryRentalTable(){
-        String querry = "SELECT k.imie_nazwisko, IFNULL(k.nazwa_firma, \"\") , s.model, s.id_sprzet, IFNULL(w.uwagi, \"\"), w.od, ws.do, w.przez_kogo, w.id_klient, w.id_wypozyczenie, w.dlugoterminowe, w.za_d_netto, IFNULL(w.kaucja_brutto, \"0\"), k.pesel_nip, w.platnosc_kaucji, w.nr_wypozycz_klient, w.nr_wypozycz_klient_rok " +
+    public static ObservableList<RentedRow> queryAndMakeHistoryRentalTable(){
+        String query = "SELECT k.imie_nazwisko, IFNULL(k.nazwa_firma, \"\") , s.model, s.id_sprzet, IFNULL(w.uwagi, \"\"), w.od, ws.do, w.przez_kogo, w.id_klient, w.id_wypozyczenie, w.dlugoterminowe, w.za_d_netto, IFNULL(w.kaucja_brutto, \"0\"), k.pesel_nip, w.platnosc_kaucji, w.nr_wypozycz_klient, w.nr_wypozycz_klient_rok " +
                 "FROM Wypozyczenie w " +
                 "JOIN Klient k ON w.id_klient = k.id_klient " +
                 "JOIN Wypozyczenie_sprzet ws ON w.id_wypozyczenie = ws.id_wypozyczenie " +
                 "JOIN Sprzet s ON ws.id_sprzet = s.id_sprzet " +
                 "WHERE ws.do IS NOT NULL";
-        try{
-            //TODO closing statement
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeHistoryRentalTable(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ResultSet queryAccessoriesName(String rentalID) throws SQLException {
-            String querry = "SELECT a.nazwa, IFNULL(wa.stopien_zuzycia,\"\") " +
+    public static HashMap<String, String> queryAccessoriesNameAndUsage(String rentalID) throws SQLException {
+            String query = "SELECT a.nazwa, IFNULL(wa.stopien_zuzycia,\"\") " +
                     "FROM Akcesoria a " +
                     "JOIN Wypozyczenie_akcesoria wa ON wa.id_akcesoria = a.id_akcesoria " +
                     "WHERE wa.id_wypozyczenie = ?";
-            PreparedStatement statement = null;
-            ResultSet resultSet = null;
-            try {
-                //TODO closing statement
-                statement = DBConnection.getConnection().prepareStatement(querry);
+
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
                 statement.setString(1, rentalID);
-                resultSet = statement.executeQuery();
-                return resultSet;
+                ResultSet resultSet = statement.executeQuery();
+                HashMap<String,String> accessoriesNamesAndUsage = new HashMap<>();
+                while (resultSet.next()){
+                    accessoriesNamesAndUsage.put(resultSet.getString(1), resultSet.getString(2));
+                }
+                return accessoriesNamesAndUsage;
             } catch (SQLException e) {
                 e.printStackTrace();
                 return null;
             }
-//            } finally {
-//                if (statement != null) {
-//                    try {
-//                        statement.close();
-//                    } catch (SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
     }
 
-    public static ResultSet queryClientTable() throws SQLException {
-        String querry = "SELECT imie_nazwisko, IFNULL(nazwa_firma, \"\"), pesel_nip, adres, dw_osob, telefon, od, nr_umowy, nr_umowy_rok, id_klient, bez_kaucji " +
+    public static ObservableList<ClientRow> queryAndMakeClientTable() throws SQLException {
+        String query = "SELECT imie_nazwisko, IFNULL(nazwa_firma, \"\"), pesel_nip, adres, dw_osob, telefon, od, nr_umowy, nr_umowy_rok, id_klient, bez_kaucji " +
                 "FROM Klient";
-        PreparedStatement statement = null;
-        try {
-            //TODO closing statement
-            statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } /*finally {
-            if (statement != null) { statement.close(); }
-        }*/
-    }
-
-    public static ResultSet queryEquipTable() throws SQLException {
-        String querry = "SELECT model, id_sprzet, nazwa, kaucja_brutto, za_d_netto, rok_produkcji, nr_seryjny, data_przegladu, przeglad_ilosc_motogodzin, wartosc_brutto, sprzedany, dostepny " +
-                "FROM Sprzet";
-        PreparedStatement statement = null;
-        try {
-            //TODO closing statement
-            statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeClientTable(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ResultSet queryAvailableEquipTable() throws SQLException {
-        String querry = "SELECT model, id_sprzet, nazwa, kaucja_brutto, za_d_netto, rok_produkcji, nr_seryjny, data_przegladu, przeglad_ilosc_motogodzin, wartosc_brutto, sprzedany, dostepny " +
+    public static ObservableList<EquipRow> queryAndMakeEquipTable() throws SQLException {
+        String query = "SELECT model, id_sprzet, nazwa, kaucja_brutto, za_d_netto, rok_produkcji, nr_seryjny, data_przegladu, przeglad_ilosc_motogodzin, wartosc_brutto, sprzedany, dostepny " +
+                "FROM Sprzet";
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeEquipTable(statement.executeQuery());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ObservableList<EquipRow> queryAndMakeAvailableEquipTable() throws SQLException {
+        String query = "SELECT model, id_sprzet, nazwa, kaucja_brutto, za_d_netto, rok_produkcji, nr_seryjny, data_przegladu, przeglad_ilosc_motogodzin, wartosc_brutto, sprzedany, dostepny " +
                 "FROM Sprzet " +
                 "WHERE dostepny = true AND sprzedany IS NULL";
-        PreparedStatement statement = null;
-        try {
-            //TODO closing statement
-            statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
+
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeEquipTable(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ResultSet queryAccessoryTable() throws SQLException {
-        String querry = "SELECT nazwa, cena_netto, zuzywalne, id_akcesoria, info " +
+    public static ObservableList<AccessoryRow> queryAndMakeAccessoryTable() throws SQLException {
+        String query = "SELECT nazwa, cena_netto, zuzywalne, id_akcesoria, info " +
                 "FROM Akcesoria";
-        PreparedStatement statement = null;
-        try {
-            //TODO closing statement
-            statement = DBConnection.getConnection().prepareStatement(querry);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet;
+
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
+            return Table.makeAccessoryTable(statement.executeQuery());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ResultSet queryAccessories(String equipID){
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            String querry = "SELECT a.id_akcesoria, a.nazwa, a.cena_netto, a.zuzywalne, sa.ilosc_akcesoria, a.info " +
-                    "FROM Akcesoria a " +
-                    "JOIN Sprzet_akcesoria sa ON sa.id_akcesoria = a.id_akcesoria " +
-                    "WHERE sa.id_sprzet = ?";
-            //TODO closing statement
-            statement = DBConnection.getConnection().prepareStatement(querry);
+    public static Map<Integer, Accessory> queryAccessories(String equipID){
+        String query = "SELECT a.id_akcesoria, a.nazwa, a.cena_netto, a.zuzywalne, sa.ilosc_akcesoria, a.info " +
+                "FROM Akcesoria a " +
+                "JOIN Sprzet_akcesoria sa ON sa.id_akcesoria = a.id_akcesoria " +
+                "WHERE sa.id_sprzet = ?";
+        try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             statement.setString(1, equipID);
-            resultSet = statement.executeQuery();
-            return resultSet;
+            ResultSet resultSet = statement.executeQuery();
+            Map<Integer, Accessory> accessories = new HashMap<>();
+            while (resultSet.next()){
+                Accessory accessory = new Accessory(resultSet.getInt(1));
+                accessory.setName(resultSet.getString(2));
+                accessory.setPriceNett(resultSet.getDouble(3));
+                accessory.setIsUsable(resultSet.getBoolean(4));
+                accessory.setQuantity(resultSet.getInt(5));
+                accessory.setInfo(resultSet.getString(6));
+                accessories.put(accessory.getAccessoryID(), accessory);
+            }
+            return accessories;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -286,23 +261,6 @@ public class DBQuery {
         return null;
     }
 
-
-    public static String queryClientContractNumber(int clientID){
-        String query = "SELECT nr_umowy, nr_umowy_rok " +
-                "FROM Klient " +
-                "WHERE id_klient = ?";
-        try(PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
-            statement.setInt(1, clientID);
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return resultSet.getString(1) + "/" + resultSet.getString(2).charAt(2) + resultSet.getString(2).charAt(3);
-        } catch (SQLException e){
-            e.printStackTrace();
-            System.out.println("Error querying client contract number");
-        }
-        return null;
-    }
-
     public static String queryNewContractNumber(){
 
         if (checkForNewYear()){
@@ -363,6 +321,9 @@ public class DBQuery {
         }
         return -1;
     }
+
+
+
 
 
 

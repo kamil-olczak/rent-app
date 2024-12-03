@@ -1,6 +1,5 @@
 package com.rentapp.gui.window;
 
-import com.rentapp.table.AccessoryRow;
 import com.rentapp.table.ClientRow;
 import com.rentapp.util.DBQuery;
 import com.rentapp.table.Table;
@@ -82,7 +81,7 @@ public class ChangeClientCtrl implements Initializable {
 
         try {
             initializeClientTable();
-            clientTable.getItems().addAll(Table.updateClientTable(DBQuery.queryClientTable()));
+            clientTable.getItems().addAll(DBQuery.queryAndMakeClientTable());
             intitializedClientTable.getItems().addAll(clientTable.getItems());
         } catch (SQLException e) {
             throw new RuntimeException(e);

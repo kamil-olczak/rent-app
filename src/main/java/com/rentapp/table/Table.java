@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class Table {
 
-    public static ObservableList<RentedRow> updateRentalTable(ResultSet resultSet) throws SQLException {
+    public static ObservableList<RentedRow> makeRentalTable(ResultSet resultSet) throws SQLException {
 
         if (resultSet != null) {
             ObservableList<RentedRow> data = FXCollections.observableArrayList();
@@ -43,7 +43,7 @@ public class Table {
                 }
                 row.setDepositGross(resultSet.getString(13) + " zł");
                 row.setPeselNip(resultSet.getString(14));
-                row.setAccessories(DBQuery.queryAccessoriesName(row.getRentalID()));
+                row.setAccessories(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID()));
                 row.setNotes(resultSet.getString(5));
                 row.setDepositPayment(resultSet.getString(15));
                 row.setClientRentalID(resultSet.getInt(16));
@@ -56,7 +56,7 @@ public class Table {
         }
     }
 
-    public static ObservableList<RentedRow> updateHistoryRentalTable(ResultSet resultSet) throws SQLException {
+    public static ObservableList<RentedRow> makeHistoryRentalTable(ResultSet resultSet) throws SQLException {
 
         if (resultSet != null) {
             ObservableList<RentedRow> data = FXCollections.observableArrayList();
@@ -80,7 +80,7 @@ public class Table {
                 }
                 row.setDepositGross(resultSet.getString(13) + " zł");
                 row.setPeselNip(resultSet.getString(14));
-                row.setAccessories(DBQuery.queryAccessoriesName(row.getRentalID()));
+                row.setAccessories(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID()));
                 row.setNotes(resultSet.getString(5));
                 row.setDepositPayment(resultSet.getString(15));
                 row.setClientRentalID(resultSet.getInt(16));
@@ -93,7 +93,7 @@ public class Table {
         }
     }
 
-    public static ObservableList<ClientRow> updateClientTable(ResultSet resultSet) throws SQLException {
+    public static ObservableList<ClientRow> makeClientTable(ResultSet resultSet) throws SQLException {
 
         if (resultSet != null){
             ObservableList<ClientRow> data = FXCollections.observableArrayList();
@@ -118,7 +118,7 @@ public class Table {
 
     }
 
-    public static ObservableList<EquipRow> updateEquipTable(ResultSet resultSet) throws SQLException {
+    public static ObservableList<EquipRow> makeEquipTable(ResultSet resultSet) throws SQLException {
         if (resultSet != null){
             ObservableList<EquipRow> data = FXCollections.observableArrayList();
             while (resultSet.next()){
@@ -143,7 +143,7 @@ public class Table {
         }
     }
 
-    public static ObservableList<AccessoryRow> updateAccessoryTable(ResultSet resultSet) throws SQLException {
+    public static ObservableList<AccessoryRow> makeAccessoryTable(ResultSet resultSet) throws SQLException {
         if (resultSet != null){
             ObservableList<AccessoryRow> data = FXCollections.observableArrayList();
             while (resultSet.next()){

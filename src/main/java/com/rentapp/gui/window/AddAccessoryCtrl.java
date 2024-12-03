@@ -1,6 +1,5 @@
 package com.rentapp.gui.window;
 
-import com.rentapp.table.EquipRow;
 import com.rentapp.util.DBQuery;
 import com.rentapp.gui.scene.SceneCtrl;
 import com.rentapp.table.AccessoryRow;
@@ -69,7 +68,7 @@ public class AddAccessoryCtrl implements Initializable {
 
         try {
             initializeAccTable();
-            accessoryTable.getItems().addAll(Table.updateAccessoryTable(DBQuery.queryAccessoryTable()));
+            accessoryTable.getItems().addAll(DBQuery.queryAndMakeAccessoryTable());
             intitializedAccTable.getItems().addAll(accessoryTable.getItems());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -117,7 +116,7 @@ public class AddAccessoryCtrl implements Initializable {
     public void addAccBase(ActionEvent event) throws SQLException, IOException {
         SceneCtrl.showAddAccBaseWindow((accessory) -> {
             try {
-                ObservableList<AccessoryRow> rows = Table.updateAccessoryTable(DBQuery.queryAccessoryTable());
+                ObservableList<AccessoryRow> rows = DBQuery.queryAndMakeAccessoryTable();
                 accessoryTable.getItems().clear();
                 accessoryTable.getItems().addAll(rows);
                 accessoryTable.getSelectionModel().select(rows.size()-1);
@@ -135,7 +134,7 @@ public class AddAccessoryCtrl implements Initializable {
         } else {
             SceneCtrl.showEditAccBaseWindow(accessoryTable.getSelectionModel().getSelectedItem(), (accessory) -> {
                 try {
-                    ObservableList<AccessoryRow> rows = Table.updateAccessoryTable(DBQuery.queryAccessoryTable());
+                    ObservableList<AccessoryRow> rows =DBQuery.queryAndMakeAccessoryTable();
                     if(rows != null) {
                         int index = findIndex(rows, accessory.getAccessoryID() + "");
                         accessoryTable.getItems().clear();
@@ -163,7 +162,7 @@ public class AddAccessoryCtrl implements Initializable {
         Optional<ButtonType> res = SceneCtrl.showMessageWindow("Potwierdzenie", "Czy na pewno chcesz usunąć akcesorium? \nSpowoduje to znikniecie informacji o wypożyczeniu tego akcesorium w historii", true);
         if(res.isPresent() && res.get().getButtonData() == ButtonBar.ButtonData.YES){
             if(DBQuery.deleteAccessory(accessoryTable.getSelectionModel().getSelectedItem().getAccessoryID())){
-                ObservableList<AccessoryRow> rows = Table.updateAccessoryTable(DBQuery.queryAccessoryTable());
+                ObservableList<AccessoryRow> rows = DBQuery.queryAndMakeAccessoryTable();
                 accessoryTable.getItems().clear();
                 accessoryTable.getItems().addAll(rows);
             }

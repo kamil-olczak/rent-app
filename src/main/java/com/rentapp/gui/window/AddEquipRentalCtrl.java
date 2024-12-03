@@ -85,7 +85,7 @@ public class AddEquipRentalCtrl implements Initializable {
 
         try {
             initializeEquipTable();
-            equipTable.getItems().addAll(Table.updateEquipTable(DBQuery.queryAvailableEquipTable()));
+            equipTable.getItems().addAll(DBQuery.queryAndMakeAvailableEquipTable());
             intitializedEquipTable.getItems().addAll(equipTable.getItems());
             TableColumn<EquipRow, String> defaultSortColumn = model;
             defaultSortColumn.setSortType(TableColumn.SortType.ASCENDING);
