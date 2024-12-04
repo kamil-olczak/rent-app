@@ -14,16 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import org.springframework.security.core.parameters.P;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
 import java.time.DateTimeException;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -31,19 +26,8 @@ import java.util.function.Function;
 
 public class AddRentalCtrl implements Initializable {
 
-
-    @FXML
-    private Button addAccessory;
-    @FXML
-    private Button addEquipment;
-    @FXML
-    private Button cancel;
-    @FXML
-    private Button changeClient;
     @FXML
     private TextField clientInfo;
-    @FXML
-    private Button delete;
     @FXML
     private TextField depositGross;
     @FXML
@@ -64,8 +48,6 @@ public class AddRentalCtrl implements Initializable {
     private TextField totPerDayGross;
     @FXML
     private TextField totPerDayNet;
-    @FXML
-    private Button finalizeRent;
     @FXML
     private VBox rootVBox;
     @FXML
@@ -89,7 +71,6 @@ public class AddRentalCtrl implements Initializable {
 
     private Rent rent;
     private Function<Integer, Integer> mainScreenCtrl;
-    private boolean docPrinted = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -111,11 +92,6 @@ public class AddRentalCtrl implements Initializable {
             SceneCtrl.showMessageWindow("Błąd", "Brak połączenia z bazą danych. \nSprawdź połączenie z serwerem bazy danych i spróbuj ponownie.");
             rootVBox.addEventHandler(KeyEvent.KEY_PRESSED, (SceneCtrl::closeWindow));
         }
-
-//        longTermRental.addEventHandler(KeyEvent.KEY_PRESSED, (keyEvent -> {
-//            totalNettLabel.setText("Stawka miesięczna za sprzęt netto");
-//            totalGrossLabel.setText("Stawka miesięczna za sprzęt brutto");
-//        }));
 
         clientInfo.setText("Wybierz klienta");
 
@@ -313,10 +289,6 @@ public class AddRentalCtrl implements Initializable {
         }
     }
 
-    public ClientRow getSelectedClient() {
-        return rent.getClient();
-    }
-
     public void setSelectedClient(ClientRow client) {
         rent.setClient(client);
         rent.setClientRentID(DBQuery.queryClientNewRentID(client.getClientID()));
@@ -327,10 +299,6 @@ public class AddRentalCtrl implements Initializable {
             depositGross.setDisable(true);
             depositPayment.setDisable(true);
         }
-    }
-
-    public List<EquipRow> getSelectedEquip() {
-        return rent.getEquip();
     }
 
     public void setSelectedAccessory(List<AccessoryRow> selectedAccessory){
@@ -368,14 +336,9 @@ public class AddRentalCtrl implements Initializable {
         this.mainScreenCtrl = function;
     }
 
-    public void setRent(Rent rent){
-        this.rent = rent;
-    }
-
 
     public VBox getRootVBox() {
         return rootVBox;
     }
-
 
 }

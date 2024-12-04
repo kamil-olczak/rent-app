@@ -27,8 +27,6 @@ public class AddClientCtrl implements Initializable {
     @FXML
     private Button endButton;
     @FXML
-    private Button cancel;
-    @FXML
     private TextArea adress;
     @FXML
     private TextField company;
@@ -79,7 +77,7 @@ public class AddClientCtrl implements Initializable {
                         SceneCtrl.closeWindow(event);
                     }
                 }
-             //else if (oldIdentityCard.equals(client.getIdentityCard())) {
+            //else if (oldIdentityCard.equals(client.getIdentityCard())) {
 //                if (DBQuery.checkClientPeselNip(client)) {
 //                    if (DBQuery.editClient(client)) {
 //                        if (invokeUpdate.apply(client)) {

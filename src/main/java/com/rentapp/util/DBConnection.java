@@ -9,23 +9,26 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class DBConnection {
     private static Connection connection;
 
-    public static boolean connect(byte [] userName, byte [] password) throws ClassNotFoundException {
+    public static boolean connect(byte [] userName, byte [] password){
         String dbDriver = "com.mysql.cj.jdbc.Driver";
         String dbURL = readConnectionString();
         if(dbURL == null) return false;
         try {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbURL, new String(userName), new String(password));
-            connection.setAutoCommit(false);
             System.out.println("Connected to database");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); Logger.logExToFile(e);
             return false;
+        } finally {
+            Arrays.fill(userName, (byte) 0);
+            Arrays.fill(password, (byte) 0);
         }
     }
     public static void close() throws SQLException {

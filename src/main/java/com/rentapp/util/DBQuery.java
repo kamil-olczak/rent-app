@@ -9,8 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
+import java.lang.management.GarbageCollectorMXBean;
 import java.sql.*;
 import java.time.Year;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -860,6 +862,9 @@ public class DBQuery {
             }
             e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować użytkownika. Błąd połączenia z bazą danych");
+        } finally {
+            Arrays.fill(login, (byte) 0);
+            Arrays.fill(password, (byte) 0);
         }
         return false;
     }
@@ -880,7 +885,7 @@ public class DBQuery {
                     statement0.executeUpdate();
                 }
             } else{
-                query = "GRANT INSERT, SELECT, UPDATE, DELETE ON rent.* TO ?@'%'";
+                query = "GRANT INSERT, SELECT, UPDATE ON rent.* TO ?@'%'";
                 try (PreparedStatement statement0 = connection.prepareStatement(query)){
                     statement0.setString(1, new String(userName));
                     statement0.executeUpdate();
@@ -902,6 +907,9 @@ public class DBQuery {
             }
             e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać użytkownika. Błąd połączenia z bazą danych");
+        } finally {
+            Arrays.fill(userName, (byte) 0);
+            Arrays.fill(password, (byte) 0);
         }
         return false;
     }
@@ -916,6 +924,8 @@ public class DBQuery {
         } catch (SQLException e) {
             e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć użytkownika. Błąd połączenia z bazą danych");
+        } finally {
+            Arrays.fill(userName, (byte) 0);
         }
         return false;
     }

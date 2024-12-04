@@ -25,15 +25,6 @@ import java.util.stream.Collectors;
 public class MainCtrl implements Initializable{
     @FXML
     private VBox rootVBox;
-    //Rental Tab
-    @FXML
-    private Button addRental;
-    @FXML
-    private Button returned;
-    @FXML
-    private Button refresh;
-    @FXML
-    private TabPane tabPane;
     @FXML
     private TableView<RentedRow> rentalTable;
     @FXML
@@ -108,12 +99,9 @@ public class MainCtrl implements Initializable{
     @FXML
     private Button deleteEquip;
 
-
     private Map<String, String> columnsNames = new HashMap<>();
     private TableView<EquipRow> equipTableCopy = new TableView<>();
-    private Function<List<EquipRow>, Boolean> setSelectedEquip;
     private boolean equipTableInitialized = false;
-
 
     //Client Tab
     @FXML
@@ -316,7 +304,6 @@ public class MainCtrl implements Initializable{
 
     //Equip Tab
     private void initializeEquipTable() {
-//        equipTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         model.setCellValueFactory(new PropertyValueFactory<>("model"));
         equipmentIDTab.setCellValueFactory(new PropertyValueFactory<>("equipmentID"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
