@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.function.Function;
 
 
@@ -32,6 +33,9 @@ public class Credentials {
             }
         } catch (IOException e) {
             e.printStackTrace(); Logger.logExToFile(e);
+        } finally{
+            Arrays.fill(password, (byte) 0);
+            Arrays.fill(userName, (byte) 0);
         }
 
         return false;
@@ -74,7 +78,11 @@ public class Credentials {
             ex.printStackTrace(); Logger.logExToFile(ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            Arrays.fill(password, (byte) 0);
+            Arrays.fill(userName, (byte) 0);
         }
+
         return false;
     }
 
@@ -143,6 +151,9 @@ public class Credentials {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Brak dostępu do pliku konfiguracujnego *.bin.");
+        } finally {
+            Arrays.fill(newPassword, (byte) 0);
+            Arrays.fill(userName, (byte) 0);
         }
         return false;
     }

@@ -878,7 +878,7 @@ public class DBQuery {
             statement.setString(2, new String(password));
             statement.executeUpdate();
             if(role.equals("admin")){
-                query = "GRANT ALTER, CREATE USER, DELETE, DROP, GRANT OPTION, INSERT, SELECT, UPDATE ON *.* TO ?@'%'";
+                query = "GRANT ALTER, CREATE USER, DELETE, DROP, GRANT OPTION, INSERT, SELECT, UPDATE ON rent.* TO ?@'%'";
                 try (PreparedStatement statement0 = connection.prepareStatement(query)){
                     statement0.setString(1, new String(userName));
                     System.out.println(statement0);
@@ -924,8 +924,6 @@ public class DBQuery {
         } catch (SQLException e) {
             e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć użytkownika. Błąd połączenia z bazą danych");
-        } finally {
-            Arrays.fill(userName, (byte) 0);
         }
         return false;
     }
