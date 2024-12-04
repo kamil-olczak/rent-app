@@ -31,7 +31,7 @@ public class Credentials {
                 return true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
 
         return false;
@@ -50,7 +50,7 @@ public class Credentials {
                 }
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -71,7 +71,7 @@ public class Credentials {
                 }
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -97,7 +97,7 @@ public class Credentials {
                 }
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -138,10 +138,10 @@ public class Credentials {
             Files.move(Paths.get(TMP_FILE_NAME), Paths.get(FILE_NAME));
             return DBQuery.updateDatabaseUser(userName, newPassword);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
             SceneCtrl.showMessageWindow("Błąd", "Nie odnaleziono pliku konfiguracujnego *.bin.");
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Brak dostępu do pliku konfiguracujnego *.bin.");
         }
         return false;
@@ -173,10 +173,10 @@ public class Credentials {
             Files.move(Paths.get(TMP_FILE_NAME), Paths.get(FILE_NAME));
             return true;
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
             SceneCtrl.showMessageWindow("Błąd", "Nie odnaleziono pliku konfiguracujnego *.bin.");
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Brak dostępu do pliku konfiguracujnego *.bin.");
         }
         return false;
@@ -194,7 +194,7 @@ public class Credentials {
                 }
             }
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

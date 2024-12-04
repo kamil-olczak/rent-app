@@ -2,6 +2,7 @@ package com.rentapp;
 
 import com.rentapp.gui.scene.LoginCtrl;
 import com.rentapp.util.DBConnection;
+import com.rentapp.util.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
@@ -32,7 +33,7 @@ public class App extends Application {
             System.out.println("Closing connection to DB");
                 DBConnection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                e.printStackTrace(); Logger.logExToFile(e);
             }
         }));
     }

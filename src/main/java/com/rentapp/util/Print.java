@@ -32,7 +32,7 @@ public class Print {
                         job.endJob();
                         return true;
                     } catch (PrinterException ex) {
-                        ex.printStackTrace();
+                        ex.printStackTrace(); Logger.logExToFile(ex); Logger.logExToFile(ex);
                         SceneCtrl.showMessageWindow("Błąd drukowania", "Nie znaleziono drukarki, lub wystąpił inny problem z drukowaniem.");
                         return false;
                     } finally {
@@ -42,7 +42,7 @@ public class Print {
             }
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd drukowania", "Nie odnaleziono dokumentu do wydrukowania. Plik nie został wyeksportowany lub został usunięty.");
             return false;
         }

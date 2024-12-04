@@ -6,6 +6,7 @@ import com.rentapp.dBObject.Accessory;
 import com.rentapp.dBObject.Rent;
 import com.rentapp.table.*;
 import com.rentapp.gui.scene.SceneCtrl;
+import com.rentapp.util.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -257,7 +258,7 @@ public class AddRentalCtrl implements Initializable {
             rent.setProbableToWhen(probableToWhen.getText());
         } catch (DateTimeException e) {
             SceneCtrl.showMessageWindow("Błąd", "Niepoprawny format daty lub godziny. Prawidłowy format to: \ndd.mm.yyyy \nhh:mm");
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return;
         }
         rent.setIsNewClient(DBQuery.checkClientStatus(rent.getClient().getClientIDInt()));

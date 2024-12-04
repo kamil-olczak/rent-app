@@ -29,7 +29,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeRentalTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -44,7 +44,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeHistoryRentalTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -64,7 +64,7 @@ public class DBQuery {
                 }
                 return accessoriesNamesAndUsage;
             } catch (SQLException e) {
-                e.printStackTrace();
+                e.printStackTrace(); Logger.logExToFile(e);
                 return null;
             }
     }
@@ -76,7 +76,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeClientTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -87,7 +87,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeEquipTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeEquipTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -112,7 +112,7 @@ public class DBQuery {
         try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query)){
             return Table.makeAccessoryTable(statement.executeQuery());
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -137,7 +137,7 @@ public class DBQuery {
             }
             return accessories;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -165,7 +165,7 @@ public class DBQuery {
 
             return clientRow;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return null;
         }
     }
@@ -196,7 +196,7 @@ public class DBQuery {
             }
             return rentedIDEquip;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return null;
     }
@@ -221,7 +221,7 @@ public class DBQuery {
             }
             return rentedIDAccessory;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return null;
     }
@@ -236,7 +236,7 @@ public class DBQuery {
             resultSet.next();
             return resultSet.getString(1);
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return null;
     }
@@ -256,7 +256,7 @@ public class DBQuery {
             }
             return rentedIDAccessoryCount;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return null;
     }
@@ -283,7 +283,7 @@ public class DBQuery {
                 resultSet.next();
                 return resultSet.getInt(1) +1 + "";
             } catch (SQLException e){
-                e.printStackTrace(); 
+                e.printStackTrace(); Logger.logExToFile(e); 
             }
         }
         return null;
@@ -300,7 +300,7 @@ public class DBQuery {
             resultSet.next();
             return resultSet.getInt(1) +1;
         } catch (SQLException e){
-            e.printStackTrace(); 
+            e.printStackTrace(); Logger.logExToFile(e); 
         }
         return -1;
     }
@@ -318,7 +318,7 @@ public class DBQuery {
             resultSet.next();
             return resultSet.getInt(1) +1;
         } catch (SQLException e){
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return -1;
     }
@@ -335,7 +335,7 @@ public class DBQuery {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return false;
     }
@@ -362,7 +362,7 @@ public class DBQuery {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return -1;
     }
@@ -385,7 +385,7 @@ public class DBQuery {
                 return true;
             }
         }catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
 
         return false;
@@ -408,7 +408,7 @@ public class DBQuery {
             }
             return false;
         } catch (SQLException e){
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return false;
     }
@@ -443,7 +443,7 @@ public class DBQuery {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
         }
         return null;
     }
@@ -478,7 +478,8 @@ public class DBQuery {
                 } catch (SQLException e1){
                     SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć klienta. Błąd edycji tabeli klientów, spróbuj ponownie.");
                 }
-                e.printStackTrace();
+                e.printStackTrace(); Logger.logExToFile(e);
+                Logger.logExToFile(e);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć klienta. Błąd połączenia z bazą danych, spróbuj ponownie.");
                 return false;
             }
@@ -536,10 +537,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException e1){
-                e1.printStackTrace();
+                e1.printStackTrace(); Logger.logExToFile(e1);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać sprzętu. Błąd modyfikacji bazy sprzętu, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zmodyfikować sprzętu. Błąd połączenia z bazą danych, spóbuj ponownie.");
         }
         return false;
@@ -568,7 +569,8 @@ public class DBQuery {
             return true;
         } catch (SQLException e) {
             connection.rollback();
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
+            Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować klienta. Błąd połączenia z bazą danych");
         }
         return false;
@@ -599,10 +601,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException e1){
-                e1.printStackTrace();
+                e1.printStackTrace(); Logger.logExToFile(e1);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć sprzętu. Błąd modyfikacji bazy sprzętu, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć sprzętu. Błąd połączenia z bazą danych, spróbuj ponownie.");
         }
         return false;
@@ -623,11 +625,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException e1){
-                e1.printStackTrace();
+                e1.printStackTrace(); Logger.logExToFile(e1);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się oznaczyć sprzętu jako sprzedany. Błąd modyfikacji tabeli sprzętu, spróbuj ponownie.");
             }
-
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować sprzętu. Błąd połączenia z bazą danych, spróbuj ponownie.");
         }
         return false;
@@ -652,10 +653,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać akcesorium. Błąd modyfikacji tabeli akcesoriów, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać akcesorium. Błąd połączenia z bazą danych");
         }
         return false;
@@ -680,10 +681,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować akcesorium. Błąd modyfikacji tabeli akcesoriów, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować akcesorium. Błąd połączenia z bazą danych");
         }
         return false;
@@ -709,10 +710,10 @@ public class DBQuery {
             try{
                 connection.rollback();
             } catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć akcesorium. Błąd modyfikacji tabeli akcesoriów, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć akcesorium. Błąd połączenia z bazą danych");
         }
         return false;
@@ -742,7 +743,7 @@ public class DBQuery {
                 statement.executeUpdate();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                e.printStackTrace(); Logger.logExToFile(e);
                 return false;
             }
 
@@ -755,7 +756,7 @@ public class DBQuery {
                     statement.setInt(1, iD);
                     statement.executeUpdate();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); Logger.logExToFile(e);
                     return false;
                 }
 
@@ -767,7 +768,7 @@ public class DBQuery {
                     statement.setTimestamp(3, null);
                     statement.executeUpdate();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); Logger.logExToFile(e);
                     return false;
                 }
             }
@@ -791,7 +792,7 @@ public class DBQuery {
 
 
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(); Logger.logExToFile(e);
                     return false;
                 }
             }
@@ -801,11 +802,11 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać wypożyczenia. Błąd modyfikacji tabeli wypożyczeń, spróbuj ponownie.");
                 return false;
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać wypożyczenia. Błąd połączenia z bazą danych");
             return false;
         }
@@ -832,10 +833,10 @@ public class DBQuery {
             try{
                 connection.rollback();
             } catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się zwrócić sprzętu. Błąd modyfikacji tabeli wypożyczeń, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zwrócić sprzętu. Błąd połączenia z bazą danych, spróbuj ponownie.");
         }
     }
@@ -854,10 +855,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             } catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować użytkownika. Błąd modyfikacji użytkowników, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się zaktualizować użytkownika. Błąd połączenia z bazą danych");
         }
         return false;
@@ -896,10 +897,10 @@ public class DBQuery {
             try {
                 connection.rollback();
             }catch (SQLException ex){
-                ex.printStackTrace();
+                ex.printStackTrace(); Logger.logExToFile(ex);
                 SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać użytkownika. Błąd modyfikacji użytkowników, spróbuj ponownie.");
             }
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się dodać użytkownika. Błąd połączenia z bazą danych");
         }
         return false;
@@ -913,7 +914,7 @@ public class DBQuery {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd", "Nie udało się usunąć użytkownika. Błąd połączenia z bazą danych");
         }
         return false;
@@ -929,7 +930,7 @@ public class DBQuery {
             }
             return userNames;
         } catch (SQLException e) {
-            e.printStackTrace();    
+            e.printStackTrace(); Logger.logExToFile(e);    
         }
         return null;
     }

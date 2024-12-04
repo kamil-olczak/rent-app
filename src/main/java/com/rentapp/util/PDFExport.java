@@ -93,7 +93,7 @@ public class PDFExport {
 
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd podczas eksportu umowy", "Nie udało się wyeksportować umowy. Brak dostępu do wzoru.");
             return false;
         }
@@ -206,7 +206,7 @@ public class PDFExport {
                     .endText();
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             SceneCtrl.showMessageWindow("Błąd podczas eksportu protokołu", "Nie udało się wyeksportować protkołu. Brak dostępu do wzoru.");
             return false;
         }

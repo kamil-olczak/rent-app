@@ -24,7 +24,7 @@ public class DBConnection {
             System.out.println("Connected to database");
             return true;
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            e.printStackTrace(); Logger.logExToFile(e);
             return false;
         }
     }
@@ -40,7 +40,7 @@ public class DBConnection {
         try (BufferedReader bReader = new BufferedReader(new FileReader("config.cfg"))) {
             return new String(bReader.readLine());
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); Logger.logExToFile(ex);
             SceneCtrl.showMessageWindow("Błąd", "Brak pliku konfiguracyjnego");
         } catch (IOException e) {
             SceneCtrl.showMessageWindow("Błąd", "Błąd odczytu pliku konfiguracyjnego");
