@@ -102,7 +102,7 @@ public class AddEquipBaseCtrl implements Initializable {
             if(!gatherData()){
                 return;
             }
-            if (DBQuery.updateEquip(equipRow)) {
+            if (DBQuery.manageEquip(equipRow, true)) {
                 setAddedEquip.apply(0);
                 closeWindow(event);
             }
@@ -111,7 +111,7 @@ public class AddEquipBaseCtrl implements Initializable {
                 if(!gatherData()){
                     return;
                 }
-                if (DBQuery.addEquip(equipRow)) {
+                if (DBQuery.manageEquip(equipRow, false)) {
                     setAddedEquip.apply(0);
                     closeWindow(event);
                 }

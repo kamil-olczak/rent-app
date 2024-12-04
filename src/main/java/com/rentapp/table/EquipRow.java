@@ -6,7 +6,6 @@ import com.rentapp.dBObject.Accessory;
 import com.rentapp.util.DBQuery;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -80,7 +79,7 @@ public class EquipRow {
 
     public void setEquipmentID(String equipmentID) throws SQLException {
         this.equipmentID = equipmentID;
-        setAccessories();
+//        setAccessories();
     }
 
     public void setName(String name) {
@@ -120,17 +119,6 @@ public class EquipRow {
     public void setSn(String sn) {
         this.sn = Objects.requireNonNullElse(sn, "");
     }
-
-
-//    public void setReviewDateSQL(String reviewDate) {
-//        if(reviewDate == null || reviewDate.isEmpty()){
-//            this.reviewDate = "";
-//        } else {
-//            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//            LocalDate date = LocalDate.parse(reviewDate, inputFormatter);
-//            this.reviewDate = date.toString();
-//        }
-//    }
 
     public void setReviewDate(String reviewDate) {
         try {
@@ -279,11 +267,11 @@ public class EquipRow {
     }
 
     public Map<Integer, Accessory> getIDAccessory() {
-        return iDAccessory;
+        return this.iDAccessory;
     }
 
     public Map<Integer, Integer> getAccessoryIDQty() {
-        return accessoryIDQty;
+        return this.accessoryIDQty;
     }
 
     public String convertDateFormatSQL(String dateString) {

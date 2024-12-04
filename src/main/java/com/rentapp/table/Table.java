@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Table {
 
@@ -43,7 +44,7 @@ public class Table {
                 }
                 row.setDepositGross(resultSet.getString(13) + " zł");
                 row.setPeselNip(resultSet.getString(14));
-                row.setAccessories(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID()));
+                row.setAccessories(Objects.requireNonNull(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID())));
                 row.setNotes(resultSet.getString(5));
                 row.setDepositPayment(resultSet.getString(15));
                 row.setClientRentalID(resultSet.getInt(16));
@@ -80,7 +81,7 @@ public class Table {
                 }
                 row.setDepositGross(resultSet.getString(13) + " zł");
                 row.setPeselNip(resultSet.getString(14));
-                row.setAccessories(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID()));
+                row.setAccessories(Objects.requireNonNull(DBQuery.queryAccessoriesNameAndUsage(row.getRentalID())));
                 row.setNotes(resultSet.getString(5));
                 row.setDepositPayment(resultSet.getString(15));
                 row.setClientRentalID(resultSet.getInt(16));
@@ -135,6 +136,7 @@ public class Table {
                 row.setEquipValueGross(resultSet.getInt(10));
                 row.setSold(resultSet.getString(11));
                 row.setAvailable(resultSet.getBoolean(12));
+                row.setAccessories();
                 data.add(row);
             }
             return data;

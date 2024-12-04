@@ -20,6 +20,7 @@ public class DBConnection {
         try {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbURL, new String(userName), new String(password));
+            connection.setAutoCommit(false);
             System.out.println("Connected to database");
             return true;
         } catch (SQLException | ClassNotFoundException e) {

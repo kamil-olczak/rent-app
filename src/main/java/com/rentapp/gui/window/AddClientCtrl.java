@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class AddClientCtrl implements Initializable {
     }
 
     @FXML
-    public void endAction(ActionEvent event) {
+    public void endAction(ActionEvent event) throws SQLException {
         trimFields();
         if (!gatherData()){
             return;

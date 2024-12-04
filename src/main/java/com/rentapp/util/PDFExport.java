@@ -186,7 +186,6 @@ public class PDFExport {
             //place notes
             x = 19.5f;
             y = 290f;
-            leading = 12.4f;
             canvas.beginText()
                     .setFontAndSize(fontBold, 9)
                     .moveText(x, y);

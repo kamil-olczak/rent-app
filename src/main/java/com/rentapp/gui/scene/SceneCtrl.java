@@ -290,6 +290,7 @@ public class SceneCtrl {
 
     public static void showMessageWindow(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initOwner(stage);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -298,6 +299,7 @@ public class SceneCtrl {
 
     public static Optional<ButtonType> showMessageWindow(String title, String message, boolean userChoice) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(stage);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -337,43 +339,6 @@ public class SceneCtrl {
         controller.setRent(rentedRow);
         newWindow.setScene(scene);
         newWindow.show();
-    }
-
-    public static Optional<ButtonType> showFinalizeRentBox(boolean contractSelected, boolean protocolSelected, Rent rent){
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Finalizacja wypożyczenia");
-
-
-        CheckBox contract = new CheckBox("Umowa klienta");
-        CheckBox protocol = new CheckBox("Protokół wypożyczenia");
-        contract.setSelected(contractSelected);
-        protocol.setSelected(protocolSelected);
-
-        ButtonType buttonTypeCancel = new ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE);
-        ButtonType buttonTypeDone = new ButtonType("Zatwierdź wypożyczenie" ,ButtonBar.ButtonData.OK_DONE);
-
-        setPrinted(false);
-        Button printButton = new Button("Eksportuj do PDF i Drukuj");
-        printButton.setOnAction(event -> {
-
-        });
-
-        VBox vbox = new VBox(10,new Label("Wybierz dokumenty do wydruku:"), contract, protocol, printButton);
-        DialogPane dialogPane = new DialogPane();
-
-
-        dialogPane.setContent(vbox);
-        dialog.setDialogPane(dialogPane);
-
-        dialog.getDialogPane().getButtonTypes().add(buttonTypeCancel);
-        dialog.getDialogPane().getButtonTypes().add(buttonTypeDone);
-
-        return dialog.showAndWait();
-    }
-
-    private static void setPrinted(boolean p){
-       printed = p;
-       System.out.println(printed);
     }
 
 }
