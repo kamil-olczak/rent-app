@@ -43,5 +43,5 @@ The application is designed to be responsive, intuitive, simple and fast to use.
 ## Clients -> Edit
 <img width="1387" alt="image" src="https://github.com/user-attachments/assets/21787ec0-5389-4bd7-9339-4b0266bc0878">
 
-## Main screen -> Users
+## Main screen -> Users (admin panel)
 <img width="1431" alt="image" src="https://github.com/user-attachments/assets/4e1feb11-f694-4fe7-9fe5-2acba13ada86">
