@@ -304,8 +304,8 @@ public class SceneCtrl {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        ButtonType buttonTypeYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-        ButtonType buttonTypeNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+        ButtonType buttonTypeYes = new ButtonType("Tak", ButtonBar.ButtonData.YES);
+        ButtonType buttonTypeNo = new ButtonType("Nie", ButtonBar.ButtonData.NO);
 
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 

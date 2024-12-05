@@ -491,8 +491,15 @@ public class DBQuery {
     }
 
     public static boolean manageEquip(EquipRow equipRow, boolean update) throws SQLException {
-        String equipQuery = "INSERT INTO Sprzet (id_sprzet, nazwa, model, za_d_netto, kaucja_brutto, rok_produkcji, nr_seryjny, wartosc_brutto, data_przegladu, przeglad_ilosc_motogodzin, sprzedany, dostepny, w_serwisie) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String equipQuery;
+        if (update){
+            equipQuery = "UPDATE Sprzet " +
+                    "SET nazwa = ?, model = ?, za_d_netto = ?, kaucja_brutto = ?, rok_produkcji = ?, nr_seryjny = ?, wartosc_brutto = ?, data_przegladu = ?, przeglad_ilosc_motogodzin = ?, sprzedany = ?, dostepny = ?, w_serwisie = ? " +
+                    "WHERE id_sprzet = ?";
+        } else {
+            equipQuery = "INSERT INTO Sprzet (id_sprzet, nazwa, model, za_d_netto, kaucja_brutto, rok_produkcji, nr_seryjny, wartosc_brutto, data_przegladu, przeglad_ilosc_motogodzin, sprzedany, dostepny, w_serwisie) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        }
         String accQuery = "INSERT INTO Sprzet_akcesoria (id_sprzet, id_akcesoria, ilosc_akcesoria) " +
                 "VALUES (?, ?, ?)";
         String deleteAccQuery = "DELETE FROM Sprzet_akcesoria " +
