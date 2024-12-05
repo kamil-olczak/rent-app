@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PDFExport {
-    public static final String RENT_DOCS_DIR = ".\\Protocols\\";
-    public static final String CONTRACTS_DIR = ".\\Contracts\\";
+    public static final String RENT_DOCS_DIR;
+    public static final String CONTRACTS_DIR;
     private static final String RENT_DOC_SRC = "protocol_tmpl.pdf";
     private static final String CONTRACT_SRC = "contract_tmpl.pdf";
     private static final FontProgram FONT_PROGRAM;
@@ -28,6 +28,13 @@ public class PDFExport {
         try {
             FONT_PROGRAM = FontProgramFactory.createFont("tahoma.ttf");
             FONT_PROGRAM_BOLD = FontProgramFactory.createFont("Tahoma-Bold.ttf");
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                RENT_DOCS_DIR = ".\\Protocols\\";
+                CONTRACTS_DIR = ".\\Contracts\\";
+            } else {
+                RENT_DOCS_DIR = "./Protocols/";
+                CONTRACTS_DIR = "./Contracts/";
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -100,8 +107,6 @@ public class PDFExport {
     }
 
     public static boolean exportRentDocument(String rentID, String contractNumber, String [] clientInfo, String [] rentInfo, List<String> notes, String date) {
-
-
 
         String dest = RENT_DOCS_DIR + clientInfo[1] + '_' +  rentID.replace('/', '_') + ".pdf";
 
